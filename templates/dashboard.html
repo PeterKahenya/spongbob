@@ -1,0 +1,136 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static '/css/global.css' %}" rel="stylesheet">
+<!--    <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet">-->
+
+  </head>
+  <body>
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li a {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #eee;
+}
+
+ #leftbox { 
+          float:left;   
+          width:49%; 
+          height:280px; 
+
+            } 
+#rightbox{ 
+          float:right;  
+          width:49%; 
+          height:280px; 
+            } 
+
+ #add__new__list{
+          float: right;
+         padding: 10px 10px;
+ }    
+ #bottom{
+    position: relative;
+ }       
+</style>
+</head>
+<body>
+
+            <div id="leftbox">
+              <h2>List of employees</h2>
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for employee.." title="Type in a name">
+
+            <ul id="myUL">
+                {% for staff in staff_list %}
+
+                    <li><a href="/staff/{{staff.id}}">{{staff}}</a></li>
+
+                {% endfor %}
+            </ul>
+
+             <a href="staff/add" ><input id="add__new__list" class="fas fa-plus" type="button" name="" value="Add a new Employee"></a>
+
+            <button id="list" type="button" class="btn btn-success position-absolute" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"></i> Asset to Employee</button>
+
+            </div>
+
+            <div id="rightbox">
+              <h2>List of assets</h2>
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for asset.." title="Type in a name">
+
+            <ul id="myUL" style="background:#fff">
+              {% for asset in assets_list %}
+
+                    <li>{{asset.name_of_asset}}</li>
+
+                {% endfor %}
+            </ul>
+            
+             <a href="assets/credit-card/add" ><input id="add__new__list" class="fas fa-plus" type="button" name="" value="Add a new Credit Card"></a>
+
+             <a href="assets/active-directory/add" ><input id="add__new__list" class="fas fa-plus" type="button" name="" value="Add a new Active Directory User"></a>
+
+<script>
+function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <!--Login form-->
+   <section style="height: 100vh;">
+    <div style="background-image: url(images/arka.jpg); background-attachment: fixed; background-size: cover; width: 100%; height: 100vh; position: relative;"  >
+    <div class="baslik">
+        <b style="font-size: 101px; text-align: center; margin-bottom: -21px; display: block;">ADAS</b>
+       
+    </div>
+    <section>
+    <form method="post" action="/login">
+        {% csrf_token %}
+        <div class="arkalogin">
+            <div class="loginbaslik">Admin Login</div>
+            {% if ERRORS %}
+                <p style="color:red">{{ERRORS}}</p>
+            {% endif %}
+            <hr style="border: 1px solid #ccc;">
+            <input class="giris" type="email" name="username" placeholder="Email Address">
+            <input class="giris" type="password" name="password" placeholder="Password">
+<!--            <a href="dashboard.html" >-->
+                <input class="butonlogin" type="submit" name="" value="Log in">
+<!--            </a>-->
+            <!--<a href="dashboard.html" target="blank"><input class="butonlogin" type="submit" name="" value="Login"></a>-->
+            <a href="/signup" ><input class="butonlogin" type="button" name="" value="Sign up"></a>
+        </div>
+    </form>
+    </section><br>
+    <span style="font-size: 23px; text-align: center; display: block; color: #E6E6E6;
+    ">Welcome To The Admin Panel</span>
+    <span style="font-size: 24px; text-align: center; display: block; color: #fff; font-weight: bold; margin-bottom: 34px;
+    ">LOGİN</span>
+    <span style="font-size: 17px; text-align: center; display: block; color: #fff;
+    ">www.adas.co.ke</span>
+    </div>
+    </section>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
