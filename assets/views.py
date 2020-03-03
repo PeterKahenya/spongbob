@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView,DeleteView
-from .models import CreditCardAsset,Asset
+from .models import CreditCardAsset,ActiveDirectoryAsset,Asset
+from staff.models import Privilege
 
 
 class AddCreditCard(CreateView):
@@ -12,6 +13,19 @@ class AddCreditCard(CreateView):
 
     success_url = "/dashboard"
 
+class AddActiveDirectoryAccount(CreateView):
+    model = ActiveDirectoryAsset
+    fields = ['type_of_asset','name_of_asset','description','username','name','first_name','last_name','groups','roles','block_sign_in','usage_location','job_title','department']
+    template_name = "add_active_directory_account.html"
+
+    success_url = "/dashboard"
+
+class AssignAsset(CreateView):
+    model=Privilege
+    fields=['asset','staff']
+    template_name="assign_asset.html"
+
+    success_url="/dashboard"
 
 class UpdateAsset(UpdateView):
     model = Asset

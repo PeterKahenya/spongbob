@@ -2,12 +2,19 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView,DetailView
 from django.views.generic.edit import UpdateView,DeleteView
-from .models import Staff
+from .models import Staff,Privilege
 
 
 class StaffProfile(DetailView):
     model = Staff
     template_name = "staff_profile.html"
+
+
+    def get_context_data(self, **kwargs):
+        context = super(StaffProfile, self).get_context_data(**kwargs)
+        context['privileges'] = Privilege.objects.filter(staff=self.object)
+        return context
+    
 
 
 class AddStaff(CreateView):

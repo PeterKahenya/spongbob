@@ -16,8 +16,13 @@ class Staff(models.Model):
 
     def __str__(self):
         return self.first_name+" "+self.last_name
+        
 class Privilege(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
-    status = models.CharField(max_length=200)
+    status = models.CharField(max_length=200,default="ENABLED")
+
+    def __str__(self):
+        return self.asset.name_of_asset+"   "+self.status
+    

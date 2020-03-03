@@ -29,162 +29,38 @@
       <br>
        <div class="text-center">
                           <div class="outer-form">
+
+                         
                     <table class="table-striped table table-bordered vertical">
                           <thead style="color: white; font-weight: normal; background-color: black;" >
                             <tr>
-                              <th  class="head">S.No.</th>
-                              <th  class="head">Username</th>
-                              <th  class="head">E-mail</th>
-                              <th  class="head">Phone Number</th>
-                              <th  class="head">Location</th>
-                              <th  class="head">Status</th>
+                              <th  class="head">Asset</th>
+                              <th  class="head">ENABLED?</th>
+                              <th  class="head">Flag</th>
                             </tr>
                           </thead>
 
                           <tbody style="border:1px solid transparent; background-color:#242424; color:#A1A6AB; text-align: left;">
-                            <tr>
-                              <td style="padding: 14px;">01</td>
-                              <td>WaLia</td>
-                              <td>Walia@gmail.com</td>
-                              <td>+1 222 555 6666</td>
-                              <td>Ontario, Canada</td>
-                              <td>
-                               <label class="switch">
-                               <input type="checkbox" checked>
-                               <span class="slider round"></span>
-                               </label>
-                              </td>
-                            </tr>
-
-
-                             <tr>
-                              <td style="padding: 14px;">02</td>
-                              <td>WaLia</td>
-                              <td>Walia@gmail.com</td>
-                              <td>+1 222 555 6666</td>
-                              <td>Ontario, Canada</td>
+                             {% for prv in privileges %}
+                              <tr>
+                              <td>{{prv.asset}}</td>
                               <td>
                                <label class="switch">
                                <input type="checkbox">
                                <span class="slider round"></span>
                                </label>
                               </td>
-                            </tr>
+                              <td>OK</td>
 
-                            <tr>
-                              <td style="padding: 14px;">03</td>
-                              <td>WaLia</td>
-                              <td>Walia@gmail.com</td>
-                              <td>+1 222 555 6666</td>
-                              <td>Ontario, Canada</td>
-                              <td>
-                               <label class="switch">
-                               <input type="checkbox">
-                               <span class="slider round"></span>
-                               </label>
-                              </td>
                             </tr>
+                          {% endfor %}
 
-                            <tr>
-                              <td style="padding: 14px;">04</td>
-                              <td>WaLia</td>
-                              <td>Walia@gmail.com</td>
-                              <td>+1 222 555 6666</td>
-                              <td>Ontario, Canada</td>
-                              <td>
-                               <label class="switch">
-                               <input type="checkbox">
-                               <span class="slider round"></span>
-                               </label>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td style="padding: 14px;">05</td>
-                              <td>WaLia</td>
-                              <td>Walia@gmail.com</td>
-                              <td>+1 222 555 6666</td>
-                              <td>Ontario, Canada</td>
-                              <td>
-                               <label class="switch">
-                               <input type="checkbox">
-                               <span class="slider round"></span>
-                               </label>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td style="padding: 14px;">06</td>
-                              <td>WaLia</td>
-                              <td>Walia@gmail.com</td>
-                              <td>+1 222 555 6666</td>
-                              <td>Ontario, Canada</td>
-                              <td>
-                               <label class="switch">
-                               <input type="checkbox">
-                               <span class="slider round"></span>
-                               </label>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td style="padding: 14px;">07</td>
-                              <td>WaLia</td>
-                              <td>Walia@gmail.com</td>
-                              <td>+1 222 555 6666</td>
-                              <td>Ontario, Canada</td>
-                              <td>
-                               <label class="switch">
-                               <input type="checkbox">
-                               <span class="slider round"></span>
-                               </label>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td style="padding: 14px;">08</td>
-                              <td>WaLia</td>
-                              <td>Walia@gmail.com</td>
-                              <td>+1 222 555 6666</td>
-                              <td>Ontario, Canada</td>
-                              <td>
-                               <label class="switch">
-                               <input type="checkbox">
-                               <span class="slider round"></span>
-                               </label>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td style="padding: 14px;">09</td>
-                              <td>WaLia</td>
-                              <td>Walia@gmail.com</td>
-                              <td>+1 222 555 6666</td>
-                              <td>Ontario, Canada</td>
-                              <td>
-                               <label class="switch">
-                               <input type="checkbox">
-                               <span class="slider round"></span>
-                               </label>
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td style="padding: 14px;">10</td>
-                              <td>WaLia</td>
-                              <td>Walia@gmail.com</td>
-                              <td>+1 222 555 6666</td>
-                              <td>Ontario, Canada</td>
-                              <td>
-                               <label class="switch">
-                               <input type="checkbox">
-                               <span class="slider round"></span>
-                               </label>
-                              </td>
-                            </tr>
+                          
 
                           </tbody>
                         </table>
+
+                        <a href="/asset/assign-asset">Assign Asset</a>
                       </div>
                   </div>
               </div>
