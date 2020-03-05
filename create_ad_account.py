@@ -1,4 +1,5 @@
 import requests
+import json
 
 
 def get_token():
@@ -12,24 +13,43 @@ def get_token():
 	headers = {"Content-Type": "application/x-www-form-urlencoded"}
 	x=requests.post(url,data=data,headers=headers)
 
-	print(x.text)
+	return json.loads(x.text)["access_token"]
 
-def create_ads_create():
-	url = 'https://www.w3schools.com/python/demopage.php'
-	myobj = {'somekey': 'somevalue'}
+def create_ad_account():
+	url = 'https://graph.microsoft.com/v1.0/users'
+	auth_token=get_token()
+	headers = {'Authorization': 'Bearer ' + auth_token}
 
-	x = requests.post(url, data = myobj)
+	
+	user_obj = {
+				  "accountEnabled": True,
+				  "displayName": "Peter Kahenya",
+				  "mailNickname": "kahenya",
+				  "userPrincipalName": "kahenya@terowamzgmail.onmicrosoft.com",
+				  "passwordProfile" : {
+				    "forceChangePasswordNextSignIn": True,
+				    "password": "ADAS#2020"
+				  }
+				}
 
-	print(x.text)
+	response = requests.post(url, json=user_obj, headers=headers)
 
-	auth_token='kbkcmbkcmbkcbc9ic9vixc9vixc9v'
-	hed = {'Authorization': 'Bearer ' + auth_token}
-	data = {'app' : 'aaaaa'}
-
-	url = 'https://api.xy.com'
-	response = requests.post(url, json=data, headers=hed)
-	print(response)
 	print(response.json())
 
+def disable_ad_account():
+	url = 'https://graph.microsoft.com/v1.0/users/90a48acd-fbcd-4ba9-bb2b-a9d1203fc8a4'
+	auth_token=get_token()
+	headers = {'Authorization': 'Bearer ' + auth_token}
 
-get_token()
+	
+	updated_user = {
+				  "accountEnabled": False
+				}
+
+	response = requests.patch(url, json=updated_user, headers=headers)
+
+	print(response.status_code)
+
+
+
+disable_ad_account()
