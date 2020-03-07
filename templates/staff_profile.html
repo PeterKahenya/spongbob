@@ -44,13 +44,22 @@
                              {% for prv in privileges %}
                               <tr>
                               <td>{{prv.asset}}</td>
-                              <td>
-                               <label class="switch">
-                               <input type="checkbox">
-                               <span class="slider round"></span>
-                               </label>
-                              </td>
-                              <td>OK</td>
+                              {% if prv.status == "ENABLED" %}
+                                <td>
+                                   <label class="switch">
+                                     <input type="checkbox" checked>
+                                     <span class="slider round"></span>
+                                   </label>
+                                </td>
+                              {% else %}
+                                <td>
+                                   <label class="switch">
+                                     <input type="checkbox">
+                                     <span class="slider round"></span>
+                                   </label>
+                                </td>
+                              {% endif %}
+                                <td>OK</td>
 
                             </tr>
                           {% endfor %}

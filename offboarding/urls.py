@@ -13,8 +13,11 @@ urlpatterns = [
     path('staff/add', AddStaff.as_view(), name="add-staff"),
     path('staff/<pk>/', StaffProfile  .as_view(), name="staff-profile"),
 
+
     path('assets/credit-card/add', AddCreditCard.as_view(), name="add-credit-card"),
     path('asset/assign-asset', AssignAsset.as_view(), name="assign-asset"),
+    path('asset/<pk>/disable', StaffProfile  .as_view(), name="staff-profile"),
+
 
     path('assets/active-directory/add', AddActiveDirectoryAccount.as_view(), name="add-active-directory"),
 

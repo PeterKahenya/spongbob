@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views import View
 from django.views.generic.edit import UpdateView,DeleteView
 from .models import CreditCardAsset,ActiveDirectoryAsset,Asset
 from staff.models import Privilege
@@ -95,6 +96,17 @@ class AssignAsset(CreateView):
     template_name="assign_asset.html"
 
     success_url="/dashboard"
+
+
+class DisablePrivilege(View):
+
+    def post(self,request):
+        p=Privilege.objects.filter(id=request.POST.get("p_id"))[0]
+        p.asset.disable()
+        p.status="DISABLED"
+        p.save()
+        
+        return redirect()
 
 class UpdateAsset(UpdateView):
     model = Asset
