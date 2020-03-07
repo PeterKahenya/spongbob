@@ -43,20 +43,30 @@
                           <tbody style="border:1px solid transparent; background-color:#242424; color:#A1A6AB; text-align: left;">
                              {% for prv in privileges %}
                               <tr>
+
                               <td>{{prv.asset}}</td>
                               {% if prv.status == "ENABLED" %}
-                                <td>
-                                   <label class="switch">
-                                     <input type="checkbox" checked>
-                                     <span class="slider round"></span>
-                                   </label>
-                                </td>
+                                  <td>
+                                      <form action="../../disable" METHOD="post">
+                                          {% csrf_token %}
+                                      <input type="hidden" name="privilege_id" value="{{prv.id}}">
+                                      <input type="submit" value="DISABLE">
+                                  </form>
+                                  </td>
+<!--                                <td>-->
+<!--                                   <label class="switch">-->
+<!--                                     <input type="checkbox" checked>-->
+<!--                                     <span class="slider round"></span>-->
+<!--                                   </label>-->
+<!--                                </td>-->
+
                               {% else %}
                                 <td>
-                                   <label class="switch">
-                                     <input type="checkbox">
-                                     <span class="slider round"></span>
-                                   </label>
+                                    <form action="../../disable" method="POST">
+                                       {% csrf_token %}
+                                      <input type="hidden" name="privilege_id" value="{{prv.id}}">
+                                      <input type="submit" value="ENABLE">
+                                  </form>
                                 </td>
                               {% endif %}
                                 <td>OK</td>

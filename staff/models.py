@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from assets.models import Asset
+from assets.models import ActiveDirectoryAsset
 
 
 class Staff(models.Model):
@@ -15,14 +15,14 @@ class Staff(models.Model):
     onboarded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.first_name+" "+self.last_name
-        
+        return self.first_name + " " + self.last_name
+
+
 class Privilege(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4(), editable=False)
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
-    asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
-    status = models.CharField(max_length=200,default="ENABLED")
+    asset = models.ForeignKey(ActiveDirectoryAsset, on_delete=models.CASCADE)
+    status = models.CharField(max_length=200, default="ENABLED")
 
     def __str__(self):
-        return self.asset.name_of_asset+"   "+self.status
-    
+        return self.asset.name_of_asset + "   " + self.status
