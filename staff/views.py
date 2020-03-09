@@ -9,10 +9,11 @@ class StaffProfile(DetailView):
     model = Staff
     template_name = "staff_profile.html"
 
-
     def get_context_data(self, **kwargs):
         context = super(StaffProfile, self).get_context_data(**kwargs)
         context['privileges'] = Privilege.objects.filter(staff=self.object)
+        context['flags'] = self.read_audit()
+
         return context
     
 

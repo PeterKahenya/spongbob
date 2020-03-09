@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADAS Audits And Flags</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1>Active Directory Audits and Flags</h1>
+        {% for audit in audits %}
+            <h3>{{audit.0.userDisplayName}}</h3>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for fail in audit %}
+                    <tr>
+                        <th scope="row">{{fail.createdDateTime}}</th>
+                        <td>{{fail.location.city}}</td>
+                        <td>{{fail.userPrincipalName}}</td>
+                        {% if fail.status.errorCode == 0 %}
+                            <td class="bg-success">Success</td>
+                        {% else %}
+                            <td class="bg-danger">{{fail.status.failureReason}}</td>
+                        {%endif %}
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        <!-- <table>
+            <th>{{audit.0.userDisplayName}}</th>
+            <tr>{{audit.0.status}} </tr>
+        </table> -->
+        {% endfor %}
+    </div>
+    
+    
+       
+
+    
+</body>
+</html>

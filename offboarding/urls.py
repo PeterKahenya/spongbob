@@ -4,12 +4,13 @@ from homepage.views import HomePage
 from accounts.views import LoginView,SignupView
 from dashboard.views import DashboardView
 from staff.views import AddStaff,StaffProfile
-from assets.views import AddCreditCard,AddActiveDirectoryAccount,AssignAsset
+from assets.views import AddCreditCard,AddActiveDirectoryAccount,AssignAsset,FlagsView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',HomePage.as_view(),name="homepage"),
+    path('audits',FlagsView.as_view(),name="audits"),
     path('staff/add', AddStaff.as_view(), name="add-staff"),
     path('staff/<pk>/', StaffProfile  .as_view(), name="staff-profile"),
 

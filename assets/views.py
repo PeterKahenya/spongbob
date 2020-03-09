@@ -118,7 +118,12 @@ class DeleteAsset(DeleteView):
     template_name = "assets/delete_asset.html"
     success_url = reverse_lazy('asset-list')
 
-
+class FlagsView(View):
+    def get(self,request):
+        audits=[]
+        for ad in ActiveDirectoryAsset.objects.all():
+            audits.append(ad.read_audit())
+        return render(request,"audit.html",{"audits":audits},None,None,None)
 
 
 
