@@ -85,8 +85,8 @@ class AddActiveDirectoryAccount(CreateView):
 
         response = requests.post(url, json=ad_user_obj, headers=headers)
 
-        # ad_user.ad_account_id=response.json()['id']
-        # ad_user.save()
+        ad_user.ad_account_id=response.json()['id']
+        ad_user.save()
 
         if response.status_code==201:
             return redirect("/dashboard")
