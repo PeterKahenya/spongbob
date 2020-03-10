@@ -45,7 +45,7 @@
                             <tr>
                               <th  class="head">Asset</th>
                               <th  class="head">ENABLED?</th>
-                              <th  class="head">Flag</th>
+                              {% comment %} <th  class="head">Flag</th> {% endcomment %}
                             </tr>
                           </thead>
 
@@ -69,18 +69,17 @@
 <!--                                   </label>-->
 <!--                                </td>-->
 {#                                  <a href="/"></a>#}
-                                  <a href="/audits">View Audits</a>
 
                               {% else %}
                                 <td>
-                                    <form action="../../disable" method="POST">
+                                    <form action="../../enable" method="POST">
                                        {% csrf_token %}
                                       <input type="hidden" name="privilege_id" value="{{prv.id}}">
                                       <input type="submit" value="ENABLE">
                                   </form>
                                 </td>
                               {% endif %}
-                                <td>OK</td>
+                                {% comment %} <td>OK</td> {% endcomment %}
 
                             </tr>
                           {% endfor %}
@@ -89,9 +88,9 @@
 
                           </tbody>
                         </table>
-                        <a href="/audits">View Audits</a>
-
-                        <a href="/asset/assign-asset">Assign Asset</a>
+                        <a href="/audits" class="btn btn-primary">View Audits</a>
+                          <br>
+                        <a href="/asset/assign-asset" class="btn btn-info">Assign Asset</a>
                       </div>
                   </div>
               </div>

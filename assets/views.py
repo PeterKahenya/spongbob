@@ -111,6 +111,15 @@ class DisablePrivilege(View):
         p.save()
         
         return redirect("/dashboard")
+class EnablePrivilege(View):
+    def post(self,request):
+        print(request.POST.get("privilege_id"))
+        p=Privilege.objects.filter(id=request.POST.get("privilege_id"))[0]
+        p.asset.enable()
+        p.status="ENABLED"
+        p.save()
+        
+        return redirect("/dashboard")
 
 class UpdateAsset(UpdateView):
     model = Asset

@@ -57,6 +57,15 @@ class ActiveDirectoryAsset(Asset):
 
         return response.status_code
 
+    def enable(self):
+        url = 'https://graph.microsoft.com/v1.0/users/'+self.ad_account_id
+        auth_token=self.get_token()
+        headers = {'Authorization': 'Bearer ' + auth_token}    
+        updated_user = { "accountEnabled": True }
+        response = requests.patch(url, json=updated_user, headers=headers)
+
+        return response.status_code
+
     def get_token(self):
         url="https://login.microsoftonline.com/4370dcec-f44f-47ec-a5a6-2cd0ec017a72/oauth2/token"
         data={
@@ -77,3 +86,4 @@ class ActiveDirectoryAsset(Asset):
 
         output_dict = [x for x in response.json()['value'] if x['userId'] == self.ad_account_id ]
         return output_dict
+
