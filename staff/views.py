@@ -12,7 +12,7 @@ class StaffProfile(DetailView):
     def get_context_data(self, **kwargs):
         context = super(StaffProfile, self).get_context_data(**kwargs)
         context['privileges'] = Privilege.objects.filter(staff=self.object)
-        # context['flags'] = self.read_audit()
+        # context['flags'] =  Privilege.objects.filter(staff=self.object)[0]
 
         return context
     
