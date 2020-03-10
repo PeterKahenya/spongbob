@@ -5,6 +5,7 @@ from accounts.views import LoginView,SignupView
 from dashboard.views import DashboardView
 from staff.views import AddStaff,StaffProfile
 from assets.views import AddCreditCard,AddActiveDirectoryAccount,AssignAsset,FlagsView
+from assets.views import DisablePrivilege
 
 
 urlpatterns = [
@@ -17,7 +18,7 @@ urlpatterns = [
 
     path('assets/credit-card/add', AddCreditCard.as_view(), name="add-credit-card"),
     path('asset/assign-asset', AssignAsset.as_view(), name="assign-asset"),
-    path('asset/<pk>/disable', StaffProfile  .as_view(), name="staff-profile"),
+    path('disable', DisablePrivilege.as_view(), name="asset_disable"),
 
 
     path('assets/active-directory/add', AddActiveDirectoryAccount.as_view(), name="add-active-directory"),

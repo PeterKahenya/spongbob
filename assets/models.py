@@ -50,7 +50,7 @@ class ActiveDirectoryAsset(Asset):
 
     def disable(self):
         url = 'https://graph.microsoft.com/v1.0/users/'+self.ad_account_id
-        auth_token=get_token()
+        auth_token=self.get_token()
         headers = {'Authorization': 'Bearer ' + auth_token}    
         updated_user = { "accountEnabled": False }
         response = requests.patch(url, json=updated_user, headers=headers)

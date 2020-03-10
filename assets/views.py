@@ -104,12 +104,13 @@ class AssignAsset(CreateView):
 class DisablePrivilege(View):
 
     def post(self,request):
-        p=Privilege.objects.filter(id=request.POST.get("p_id"))[0]
+        print(request.POST.get("privilege_id"))
+        p=Privilege.objects.filter(id=request.POST.get("privilege_id"))[0]
         p.asset.disable()
         p.status="DISABLED"
         p.save()
         
-        return redirect()
+        return redirect("/dashboard")
 
 class UpdateAsset(UpdateView):
     model = Asset
