@@ -70,10 +70,17 @@
  }    
  #bottom{
     position: relative;
- }       
+ }    
 </style>
 </head>
 <body>
+  <div class="topnav">
+  <a class="active" href="{% url 'dashboard' %}">Home</a>
+  <a href="#contact">Contact</a>
+  <a href="#about">About</a>
+  <a href="#logout">Logout</a>
+</div>
+
 
             <div id="leftbox">
               <h2>List of employees</h2>
@@ -89,7 +96,7 @@
 
              <a href="staff/add" ><input id="add__new__list" class="fas fa-plus" type="button" name="" value="Add a new Employee"></a>
 
-            <button id="list" type="button" class="btn btn-success position-absolute" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"></i> Asset to Employee</button>
+            <!-- <button id="list" type="button" class="btn btn-success position-absolute" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"></i> Asset to Employee</button> -->
 
             </div>
 
@@ -100,7 +107,7 @@
             <ul id="myUL" style="background:#fff">
               {% for asset in assets_list %}
 
-                    <li>{{asset.name_of_asset}}</li>
+                    <li><a href="{{asset.name_of_asset}}">{{asset.name_of_asset}}</a></li>
 
                 {% endfor %}
             </ul>

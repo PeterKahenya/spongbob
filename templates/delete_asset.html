@@ -5,6 +5,14 @@
     <title>Confirm Delete</title>
 </head>
 <body>
+	<body>
+  <div class="topnav">
+  <a class="active" href="{% url 'dashboard' %}">Home</a>
+  <a href="#contact">Contact</a>
+  <a href="#about">About</a>
+  <a href="#logout">Logout</a>
+</div>
+
 <h1>Co</h1>
 <form method="post">{% csrf_token %}
     <p>Are you sure you want to delete "{{ object }}"?</p>

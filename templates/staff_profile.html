@@ -15,11 +15,20 @@
 
   </head>
   <body>
+    <div class="topnav">
+  <a class="active" href="{% url 'dashboard' %}">Home</a>
+  <a href="#contact">Contact</a>
+  <a href="#about">About</a>
+  <a href="#logout">Logout</a>
+</div>
+
   <div class="d-flex flex-column align-items-center justify-content-center">
       <div class="card">
   <img src="{% static '/images/spong.jpeg' %}" alt="John" style="width:100%">
   <h1>{{staff.first_name}} {{staff.last_name}}</h1>
   <p class="title">{{staff.email}}</p>
+
+   
 <!--  <a href="#"><i class="fa fa-dribbble"></i></a>-->
 <!--  <a href="#"><i class="fa fa-twitter"></i></a>-->
 <!--  <a href="#"><i class="fa fa-linkedin"></i></a>-->
@@ -43,20 +52,32 @@
                           <tbody style="border:1px solid transparent; background-color:#242424; color:#A1A6AB; text-align: left;">
                              {% for prv in privileges %}
                               <tr>
+
                               <td>{{prv.asset}}</td>
                               {% if prv.status == "ENABLED" %}
-                                <td>
-                                   <label class="switch">
-                                     <input type="checkbox" checked>
-                                     <span class="slider round"></span>
-                                   </label>
-                                </td>
+                                  <td>
+                                      <form action="../../disable" METHOD="post">
+                                          {% csrf_token %}
+                                      <input type="hidden" name="privilege_id" value="{{prv.id}}">
+                                      <input type="submit" value="DISABLE">
+                                  </form>
+                                  </td>
+<!--                                <td>-->
+<!--                                   <label class="switch">-->
+<!--                                     <input type="checkbox" checked>-->
+<!--                                     <span class="slider round"></span>-->
+<!--                                   </label>-->
+<!--                                </td>-->
+{#                                  <a href="/"></a>#}
+                                  <a href="/audits">View Audits</a>
+
                               {% else %}
                                 <td>
-                                   <label class="switch">
-                                     <input type="checkbox">
-                                     <span class="slider round"></span>
-                                   </label>
+                                    <form action="../../disable" method="POST">
+                                       {% csrf_token %}
+                                      <input type="hidden" name="privilege_id" value="{{prv.id}}">
+                                      <input type="submit" value="ENABLE">
+                                  </form>
                                 </td>
                               {% endif %}
                                 <td>OK</td>

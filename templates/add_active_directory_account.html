@@ -1,3 +1,41 @@
+<body>
+
+    <style type="text/css">
+        body{
+            background-color: #ccc;
+        }
+ .topnav {
+  overflow: hidden;
+  background-color: #2196F3;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: black;
+  color: white;
+}
+
+.topnav a.active {
+  background-color: black;
+  color: white;
+} 
+    </style>
+    <body>
+  <div class="topnav">
+  <a class="active" href="{% url 'dashboard' %}">Home</a>
+  <a href="#contact">Contact</a>
+  <a href="#about">About</a>
+  <a href="#logout">Logout</a>
+</div>
+<body>
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
@@ -18,3 +56,4 @@
     <input type="password" name="password" placeholder="Password">
     <input type="submit" value="Submit">
 </form>
+</body>
