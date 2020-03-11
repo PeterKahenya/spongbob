@@ -24,7 +24,7 @@
 
   <div class="d-flex flex-column align-items-center justify-content-center">
       <div class="card">
-  <img src="{% static '/images/spong.jpeg' %}" alt="John" style="width:100%">
+  <img  src="{% static '/images/spong.jpeg' %}" alt="John" style="width:100%;height:100%;border-radius: 50%" >
   <h1>{{staff.first_name}} {{staff.last_name}}</h1>
   <p class="title">{{staff.email}}</p>
 
@@ -64,14 +64,6 @@
                                       <input type="submit" value="DISABLE">
                                   </form>
                                   </td>
-<!--                                <td>-->
-<!--                                   <label class="switch">-->
-<!--                                     <input type="checkbox" checked>-->
-<!--                                     <span class="slider round"></span>-->
-<!--                                   </label>-->
-<!--                                </td>-->
-{#                                  <a href="/"></a>#}
-
                               {% else %}
                                 <td>
                                     <form action="../../enable" method="POST">
@@ -82,30 +74,9 @@
                                 </td>
                               {% endif %}
                                 {% if prv.asset.get_flags  %}
-                                <td class="bg-danger" data-toggle="modal" data-target="#exampleModal">
+                                <td class="bg-danger" data-toggle="modal" data-target="#flags{{forloop.counter}}">
                                   ALERT
                                 </td>
-                                <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Flagging</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        {{prv.asset.get_flags}}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-                                
                                 {% else %}
                                 <td class="bg-success">
                                   OK
@@ -126,6 +97,50 @@
                   </div>
               </div>
   </div>
+
+  {% for prv in privileges %}
+    {% if prv.asset.get_flags  %}
+      <div class="modal fade bd-example-modal-xl" id="flags{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+              <div class="modal-content">
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Date</th>
+                      <th scope="col">InitiatedBy</th>
+                      <th scope="col">UserPrincipalName</th>
+                      <th scope="col">Initial Status</th>
+                      <th scope="col">New Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for flag in prv.asset.get_flags %}
+                    <tr>
+                      <th scope="row">{{flag.activityDateTime}}</th>
+                      <td>
+                        <small>
+                        {% if flag.initiatedBy.user %}
+                          AD User {{flag.initiatedBy.user.displayName}}
+                        {% else %}
+                          App Name {{flag.initiatedBy.app.displayName}}
+                        {% endif %}
+                      </small>
+                      </td>
+                      <td>{{flag.targetResources.0.userPrincipalName}}</td>
+                      <td>False</td>
+                      <td>True</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+      </div>
+    {% else %}
+    
+    {% endif %}
+      
+  {% endfor %}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
