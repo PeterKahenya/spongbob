@@ -7,6 +7,15 @@ from .models import CreditCardAsset,ActiveDirectoryAsset,Asset
 from staff.models import Privilege
 import requests
 import json
+import requests
+from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
+from xhtml2pdf import pisa             # import python module
+from io import BytesIO
+from django.template.loader import get_template
+import os
+from django.conf import settings
+
 
 
 class AddCreditCard(CreateView):
@@ -84,7 +93,7 @@ class AddActiveDirectoryAccount(CreateView):
                 }
 
         response = requests.post(url, json=ad_user_obj, headers=headers)
-
+        print(response.json())
         ad_user.ad_account_id=response.json()['id']
         ad_user.save()
 
@@ -132,11 +141,67 @@ class DeleteAsset(DeleteView):
     success_url = reverse_lazy('asset-list')
 
 class FlagsView(View):
+    def get_token(self):
+        url = "https://login.microsoftonline.com/4370dcec-f44f-47ec-a5a6-2cd0ec017a72/oauth2/token"
+        data = {
+            "grant_type": "client_credentials",
+            "client_id": "bba23e01-d3e5-4ba3-b7bc-51ffada2ccf9",
+            "client_secret": "v]h?-ih0f67A6h?Tp:x]H9qx.kLNH:XW",
+            "resource": "https://graph.microsoft.com"
+        }
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        x = requests.post(url, data=data, headers=headers)
+
+        return json.loads(x.text)["access_token"]
+
     def get(self,request):
         audits=[]
         for ad in ActiveDirectoryAsset.objects.all():
             audits.append(ad.read_audit())
+        self.send_audits()
         return render(request,"audit.html",{"audits":audits},None,None,None)
+    
 
+    def send_audits(self):
+        url = 'https://graph.microsoft.com/v1.0/auditLogs/directoryAudits'
+        print("fetching flags")
+
+        auth_token = self.get_token()
+
+        headers = {'Authorization': 'Bearer ' + auth_token}
+        response = requests.get(url, headers=headers)
+        list_of_events = response.json()['value']
+
+        suspicious_events = []
+        for event in list_of_events:
+            affectedResource = event['targetResources'][0]
+            suspicious_events.append(event)
+        all_auditors=[u for u in User.objects.all() if u.groups.filter(name="Auditors").exists()]
+        
+        if len(suspicious_events):
+            template = get_template('audit_log_report.html')
+            html = template.render({"suspecious_audits":suspicious_events})
+            report_file_path=os.path.join(settings.MEDIA_ROOT,"reports/"+"audit_report.pdf")
+            report_file = open(report_file_path, "w+b")
+            pisaStatus = pisa.CreatePDF(html, dest=report_file)
+            if pisaStatus.err:
+                return HttpResponse('We had some errors <pre>' + html + '</pre>')
+            report_file.close()
+            
+            attachments=[
+                    ("ADAS_AUDIT_REPORT.pdf",open(report_file_path,"rb").read(),'application/pdf'),
+                ]
+            
+            email = EmailMessage(
+                'ADAS AUDIT LOGS',
+                'See Attached the Audit logs for the ADAS system',
+                'terrymwangi05@gmail.com',
+                [u.email for u in all_auditors],
+                [],
+                reply_to=['terrymwangi05@gmail.com'],
+                attachments=attachments
+            )
+            email.content_subtype = "html"
+            email.send()
 
 

@@ -1,0 +1,24 @@
+<div>
+    <h1>Audit Logs</h1>
+    <table style="width:100%">
+        <tr>
+          <th>Date</th>
+          <th>OperationType</th>
+          <th>InitiatedBy</th>
+          <th>Target Resources</th>
+          <th>ModifiedProperties</th>
+
+
+        </tr>
+        {% for audit in suspecious_audits %}
+        <tr>
+          <td>{{audit.activityDateTime}}</td>
+          <td>{{audit.operationType}}</td>
+          <td>{{audit.initiatedBy}}</td>
+          <td>{{audit.targetResource}}</td>
+          <td>{{audit.modifiedProperties}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      
+</div>

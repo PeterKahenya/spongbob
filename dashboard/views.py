@@ -9,3 +9,9 @@ class DashboardView(View):
         return render(request, "dashboard.html",
                       {"staff_list": Staff.objects.all(), "assets_list": ActiveDirectoryAsset.objects.all()}, None,
                       None, None)
+                      
+class ITDashboardView(View):
+    def get(self, request):
+        return render(request, "it_dashboard.html",
+                      {"staff_list": Staff.objects.all(), "assets_list": ActiveDirectoryAsset.objects.all()}, None,
+                      None, None)

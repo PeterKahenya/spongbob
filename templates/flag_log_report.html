@@ -1,0 +1,31 @@
+<div>
+    <h1>Audit Logs</h1>
+    <table style="width:100%">
+        <tr>
+          <th >Date</th>
+            <th>InitiatedBy</th>
+                      <th>UserPrincipalName</th>
+                      <th>Initial Status</th>
+                      <th>New Status</th>
+        </tr>
+         {% for flag in flags %}
+         {% comment %} {{flag.activityDateTime}} {% endcomment %}
+                    <tr>
+                      <td>{{flag.activityDateTime}}</td>
+                      <td>
+                        <small>
+                        {% if flag.initiatedBy.user %}
+                          AD User {{flag.initiatedBy.user.displayName}}
+                        {% else %}
+                          App Name {{flag.initiatedBy.app.displayName}}
+                        {% endif %}
+                      </small>
+                      </td>
+                      <td>{{flag.targetResources.0.userPrincipalName}}</td>
+                      <td>False</td>
+                      <td>True</td>
+                    </tr>
+                    {% endfor %}
+      </table>
+      
+</div>

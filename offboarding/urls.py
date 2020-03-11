@@ -2,11 +2,11 @@ from django.contrib import admin
 from django.urls import path
 from homepage.views import HomePage
 from accounts.views import LoginView,SignupView
-from dashboard.views import DashboardView
+from dashboard.views import DashboardView,ITDashboardView
 from staff.views import AddStaff,StaffProfile
 from assets.views import AddCreditCard,AddActiveDirectoryAccount,AssignAsset,FlagsView
 from assets.views import DisablePrivilege,EnablePrivilege
-
+from accounts.views import logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -20,6 +20,8 @@ urlpatterns = [
     path('enable', EnablePrivilege.as_view(), name="asset_enable"),
     path('assets/active-directory/add', AddActiveDirectoryAccount.as_view(), name="add-active-directory"),
     path('dashboard', DashboardView.as_view(), name="dashboard"),
+    path('it', ITDashboardView.as_view(), name="it-dashboard"),
     path('login',LoginView.as_view(),name="login"),
+    path('logout',logout_view,name="logout"),
     path('signup',SignupView.as_view(),name="signup")
 ]

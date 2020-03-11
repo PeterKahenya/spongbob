@@ -1,8 +1,14 @@
 from django.shortcuts import render,redirect
 from django.views import View
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 from django.contrib.auth import authenticate, login
 
+
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    return redirect("/")
 
 class SignupView(View):
     def get(self, request):
@@ -15,16 +21,24 @@ class SignupView(View):
         username = request.POST.get("email")
         #implement Phone Number
         password = request.POST.get("password")
+        role = request.POST.get("role")
+
 
         user=User.objects.create_user(username=username,email=email,password=password)
 
         user.first_name = first_name
         user.last_name = last_name
+        if role=="hr":
+            user.groups.add(Group.objects.get(id=2))
+        elif role=="it":
+            user.groups.add(Group.objects.get(id=3))
+        else:
+            user.groups.add(Group.objects.get(id=1))
+        
         user.save()
 
         if user is not None:
-            login(request, user)
-            return redirect("/dashboard", permanent=True)
+            return redirect("/", permanent=True)
         else:
             return render(request, "signup.html", {"ERRORS":"Something Went Wrong"}, None, None, None)
 
@@ -41,8 +55,16 @@ class LoginView(View):
 
         if user is not None:
             login(request,user)
-            # redirect on successful login
-            return redirect("/dashboard")
+
+
+            if user.groups.filter(name="HumanResource").exists():
+                return redirect("/dashboard")
+            elif user.groups.filter(name="IT").exists():
+                return redirect("/it")
+            elif user.groups.filter(name="Auditors").exists():
+                return redirect("/audits")
+            else:
+                return redirect("/dashboard")
         else:
             return render(request,"index.html",{"ERRORS":"Invalid Credentials"},None,None,None)
 
